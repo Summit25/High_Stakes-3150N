@@ -6,4 +6,5 @@
 */
 
 extern void two_ring_route();
+extern void safe_4_ring_route();
 #endif

@@ -239,7 +239,7 @@ if(AutoSelectorVal==1)//Quali close 6 triball auto
 
 if(AutoSelectorVal==2)// awp mid steal
 {
-  //test2();
+  safe_4_ring_route();
 
 }
 
@@ -355,10 +355,10 @@ int BTask(void)
 
     while(true)
     {
-    if (abs(LiftSensor.position(degrees)) <= 19 && BTaskActiv==1) {
+    if (abs(LiftSensor.position(degrees)) <= 14 && BTaskActiv==1) {
           mvel = (90 - LiftSensor.position(vex::rotationUnits::deg)) * 1.25; //301.81
           RunLift(-100);
-          if (abs(LiftSensor.position(degrees)) > 19) {
+          if (abs(LiftSensor.position(degrees)) > 14) {
             BTaskActiv = 0;
           }
           }
