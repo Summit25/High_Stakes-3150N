@@ -234,12 +234,12 @@ Zeroing(true,true);
 //Put Auto route function into if statements to use autoselector
 if(AutoSelectorVal==1)//Quali close 6 triball auto 
 {
-  //test();
+  safe_5_ring_route_flip();
 }
 
 if(AutoSelectorVal==2)// awp mid steal
 {
-  safe_4_ring_route();
+  safe_5_ring_route();
 
 }
 
@@ -250,7 +250,7 @@ if(AutoSelectorVal==3)// brin
 
 if(AutoSelectorVal==4)// Elim-Steal
 {
-
+  mogo_rush();
   
 }
 
@@ -344,56 +344,98 @@ int PTask(void)
       Clamp.set(false);
     }
 
+          //Toggles IntakeLift
+    if(ATaskActiv==0&&Controller1.ButtonX.pressing()&&ButtonPressingX==0)
+    {
+      ButtonPressingX=1;
+      ATaskActiv=1;
+      IntakeLift.set(true);
+    }
+
+    else if(!Controller1.ButtonX.pressing())ButtonPressingX=0;
+
+    else if(ATaskActiv==1&&Controller1.ButtonX.pressing()&&ButtonPressingX==0)
+    {
+      ButtonPressingX=1;
+      ATaskActiv=0;
+      IntakeLift.set(false);
+    }
+
   }
   return 0;
 }
 
-int BTask(void)
-{   
-    int mvel = 0;  
-    int pow1 = 0;
+int BTask(void) {
+  int mvel = 0;
+  int pow1 = 0;
 
-    while(true)
-    {
-    if (abs(LiftSensor.position(degrees)) <= 14 && BTaskActiv==1) {
-          mvel = (90 - LiftSensor.position(vex::rotationUnits::deg)) * 1.25; //301.81
-          RunLift(-100);
-          if (abs(LiftSensor.position(degrees)) > 14) {
-            BTaskActiv = 0;
-          }
-          }
-    else {
-      pow1=((Controller1.ButtonL2.pressing()-Controller1.ButtonL1.pressing())*100);//Calculate intake power, if button pressed, button.pressing returns 1
-      std::cout << mvel << std::endl;
-      if(pow1==0){
-      Lift.setStopping(hold);
-      Lift.stop();}
-      else{
-      RunLift(-pow1);
+  while(true) {
+    if(BTaskActiv==1) {
+      if(abs(LiftSensor.position(degrees)) < 19) {
+        RunLift(-100);
+        if(abs(LiftSensor.position(degrees)) > 19) {
+          BTaskActiv = 0;
+        }
+      } 
+      else if(abs(LiftSensor.position(degrees)) > 19) {
+        RunLift(100);
+        if(abs(LiftSensor.position(degrees)) < 29) {
+          BTaskActiv = 0;
+        }
+      } 
     }
-    }  
+    else {
+      pow1=(Controller1.ButtonL1.pressing()-Controller1.ButtonL2.pressing())*100;
+      if(pow1==0) {
+        Lift.setStopping(hold);
+        Lift.stop();
+      }
+      else {
+        RunLift(pow1);
+      }
+    }
 
-    if(Controller1.ButtonA.pressing() && ButtonPressingA == 0)
-    {
+// copy of macro so if i break it i still have a backup 
+  // while(true) {
+  //   if(abs(LiftSensor.position(degrees)) <= 19 && YTaskActiv==1) {
+  //     mvel = (90 - LiftSensor.position(vex::rotationUnits::deg)) 1.25; //301.81
+  //     RunLift(-100);
+  //     std::cout << mvel << std::endl; //test
+  //     if(abs(LiftSensor.position(degrees)) > 19) {
+  //       YTaskActiv = 0;
+  //     }
+  //   }
+  //   else {
+  //     pow1=((Controller1.ButtonR2.pressing()-Controller1.ButtonR1.pressing())*100);//Calculate intake power, if button pressed, button.pressing returns 1
+  //     std::cout << mvel << std::endl; //test
+  //     if(pow1==0) {
+  //       Lift.setStopping(hold);
+  //       Lift.stop();
+  //     }
+  //     else {
+  //       RunLift(pow1);
+  //     }
+  //   } 
+
+    //commenting out the button a pressing macro because we do not have a rotation sensor for now
+
+    if(Controller1.ButtonA.pressing() && ButtonPressingA == 0) {
       ButtonPressingA=1;
       BTaskActiv=1;
-      
-               
     }
 
     else if(!Controller1.ButtonA.pressing())ButtonPressingA=0;
 
-    else if(BTaskActiv==1&&Controller1.ButtonA.pressing()&&ButtonPressingA==0)
-    {
+    else if(BTaskActiv==1&&Controller1.ButtonA.pressing()&&ButtonPressingA==0) {
       ButtonPressingA=1;
       BTaskActiv=0;
       RunLift(0);
     }
 
+
   }
   return 0;
 }
-
 
 
 

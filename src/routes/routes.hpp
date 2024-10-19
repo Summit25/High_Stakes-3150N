@@ -6,5 +6,7 @@
 */
 
 extern void two_ring_route();
-extern void safe_4_ring_route();
+extern void safe_5_ring_route();
+extern void safe_5_ring_route_flip();
+extern void mogo_rush();
 #endif

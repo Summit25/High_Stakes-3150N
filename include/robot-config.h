@@ -15,7 +15,7 @@ extern motor Roller;
 extern digital_out Clamp;
 extern digital_out RightBackWing;
 extern digital_out Climb;
-extern digital_out RingClamp;
+extern digital_out IntakeLift;
 extern motor PU;
 extern inertial Gyro;
 extern digital_out LeftBackWing;

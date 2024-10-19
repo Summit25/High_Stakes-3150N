@@ -7,14 +7,21 @@
 // MoveTimePID(TestPara, motor speed, time traveled (sec), time to full speed, heading, false);
 // are we cooked? are we cooking?
 
-void safe_4_ring_route(){
+void mogo_rush(){
     //version number 1.0 draft route
     //issues: intake range, time to end
     PIDDataSet TestPara={1.5,0.1,0.15}; //initialize 1.5, 0.1, 0.15
-    Clamp.set(true);
-    MoveEncoderPID(TestPara, -50, 29, 0.2, 0, true);
-    wait(500,msec);
+    MoveEncoderPID(TestPara, -60, 28, 0.2, 0, true);
+    wait(250,msec);
     Clamp.set(false);
+    wait(250,msec);
+    RunRoller(100);
+    TurnMaxTimePID(TestPara, -110, 1, true);
+    MoveEncoderPID(TestPara, 60, 25, 0.2, -110, true);
+    wait(700,msec);
+    TurnMaxTimePID(TestPara, 60, 1, true);
+    MoveEncoderPID(TestPara, 60, 43, 0.2, 60, true);
+    Clamp.set(true);
+    IntakeLift.set(true);
     
-   
 }
